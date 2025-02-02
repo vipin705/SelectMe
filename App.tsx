@@ -1,16 +1,16 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import { StatusBar } from 'expo-status-bar';
+import Tabs from './navigators/Tabs';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <>
-      <StatusBar style='dark' />
+      <StatusBar style='light' />
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Login'>
           <Stack.Screen
@@ -22,6 +22,13 @@ export default function App() {
             name='SignUp'
             component={SignUpScreen}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Home'
+            component={Tabs}
+            options={{
+              headerShown: false,
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
