@@ -37,7 +37,7 @@ function Tabs() {
   return (
     <Tab.Navigator screenOptions={tabBarOptions}>
       <Tab.Screen
-        name='Home'
+        name='Dashboard'
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color }) => (

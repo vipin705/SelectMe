@@ -81,6 +81,7 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
                 onBlur={handleBlur('email')}
                 value={values.email}
                 keyboardType='email-address'
+                autoCapitalize='none'
               />
               {touched.email && errors.email && (
                 <Text style={styles.errorText}>{errors.email}</Text>
