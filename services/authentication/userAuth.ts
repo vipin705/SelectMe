@@ -1,5 +1,8 @@
-import { sub } from 'date-fns';
+// import { sub } from 'date-fns';
 import supabase from '../supabaseClient';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+
 
 export const loginWithEmail = async (email: string, password: string) => {
   let { data, error } = await supabase.auth.signInWithPassword({
@@ -14,6 +17,7 @@ export const loginWithEmail = async (email: string, password: string) => {
 };
 
 export const signUp = async (email: string, password: string) => {
+  const navigation = useNavigation<NavigationProp<any>>();
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
@@ -23,6 +27,7 @@ export const signUp = async (email: string, password: string) => {
     console.error('Sign-up error:', error.message);
   } else {
     console.log('Signed up successfully:', data);
+    navigation.navigate('Login');
   }
 };
 

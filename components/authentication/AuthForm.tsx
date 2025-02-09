@@ -14,14 +14,17 @@ import {
   loginValidationSchema,
   signUpValidation,
 } from '../../modals/form/form';
+import { NavigationProp } from '@react-navigation/native';
 import Button from '../ui/Button';
 
 type AuthFormProps = {
   isLogin: boolean;
   submitHandler: (values: any) => void;
+  navigation: NavigationProp<any>;
 };
-
-function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
+function AuthForm({ isLogin, submitHandler, navigation }: AuthFormProps ) {
+  const { navigate } = navigation;
+  
   const formValidation = isLogin ? loginValidationSchema : signUpValidation;
   const initialFormValues = isLogin
     ? { email: '', password: '' }
@@ -51,7 +54,7 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
           }) => (
             <View style={styles.formContainer}>
               <Text style={styles.title}>
-                {isLogin ? 'Welcome back' : 'Create a new account'}
+                {isLogin ? 'Login' : 'Create a new account'}
               </Text>
               {/* <Text style={styles.title}>Create a new account</Text> */}
               {!isLogin && (
@@ -99,6 +102,15 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>
               )}
+              {
+                isLogin && (
+                  <TouchableOpacity onPress={() => navigate("ForgotPassword")} style={styles.forgotPassword}>
+                    <Text style={{ color: 'blue' }}>Forgot Password?</Text>
+                  </TouchableOpacity>
+                )
+              }
+             
+
               {!isLogin && (
                 <>
                   <Text style={styles.inputTitle}>Confirm Password</Text>
@@ -125,7 +137,7 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
                 disabled={isSubmitting}
               >
                 <Text style={styles.buttonText}>
-                  {isLogin ? 'Login' : 'Sign up'}
+                  {isLogin ? 'Log In' : 'Sign up'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -155,7 +167,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    shadowRadius: 2,
+    shadowRadius: 10,
     elevation: 5,
   },
   title: {
@@ -179,6 +191,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     color: '#404040',
+
+
   },
   button: {
     width: '100%',
@@ -200,6 +214,10 @@ const styles = StyleSheet.create({
   },
   pressed: {
     backgroundColor: '#404040',
+  },
+  forgotPassword: {
+    alignSelf: 'flex-end',
+    marginBottom: 10,
   },
 });
 

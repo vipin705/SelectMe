@@ -30,6 +30,7 @@ export const GlobalStyles = {
     marginBottom: 10,
     color: '#404040',
   },
+ 
   button: {
     width: '100%',
     backgroundColor: '#404040',

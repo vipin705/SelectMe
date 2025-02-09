@@ -20,7 +20,7 @@ function LoginScreen({ navigation }: { navigation: NavigationProp<any> }) {
 
   return (
     <View style={styles.container}>
-      <AuthForm isLogin submitHandler={handleLogin} />
+      <AuthForm isLogin submitHandler={handleLogin} navigation={navigation} />
       <TouchableOpacity onPress={() => navigate('SignUp')}>
         <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
@@ -33,12 +33,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#D9D9D9',
+    // backgroundColor: '#D9D9D9',
+    backgroundColor: "#f8f9fa",
   },
   linkText: {
     color: '#6200ee',
-    marginTop: 1,
     textAlign: 'center',
+    marginTop: 10
   },
 });
 
