@@ -6,6 +6,7 @@ import { LoginFormValues } from '../modals/form/form';
 import { LinearGradient } from 'expo-linear-gradient';
 import { GlobalStyles } from '../styles/globalStyles';
 import { useAuth } from '../context/Auth/useAuth';
+// import supabase from '../services/supabaseClient';
 
 const { colors } = GlobalStyles;
 
@@ -13,9 +14,10 @@ function LoginScreen({ navigation }: { navigation: NavigationProp<any> }) {
   const { navigate } = navigation;
   const { login } = useAuth();
 
-  function handleLogin(values: LoginFormValues) {
+  async function handleLogin(values: LoginFormValues) {
     const { email, password } = values;
     login(email as string, password as string);
+   
   }
 
   return (
@@ -44,3 +46,6 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+
+
+

@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 const passwordRules = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
 export const signUpValidation = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
+  fullName: Yup.string().required('Name is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
@@ -29,7 +29,7 @@ export const loginValidationSchema = Yup.object().shape({
 });
 
 export type SignUpFormValues = {
-  name: string;
+  fullName: string;
   email: string;
   password: string;
   confirmPassword: string;

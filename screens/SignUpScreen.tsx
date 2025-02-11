@@ -3,14 +3,16 @@ import { NavigationProp } from '@react-navigation/native';
 import  AuthForm  from '../components/authentication/AuthForm';
 import { SignUpFormValues } from '../modals/form/form';
 import { signUp } from '../services/authentication/userAuth';
+// import supabase from '../services/supabaseClient';
 
 function SignUpScreen({ navigation }: { navigation: NavigationProp<any> }) {
   const { navigate } = navigation;
 
-  function handleSignUp(values: SignUpFormValues) {
-    console.log('Sign up Values:', values);
-    signUp(values.email as string, values.password as string);
-   // navigation.navigate('Login'); // Navigate to the home screen after sign up
+  async function handleSignUp(values: SignUpFormValues) {
+
+    const { email, password, fullName,  } = values;
+    await signUp(email, password, fullName, navigation);
+    
   }
 
   return (
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#f8f9fa",
   },
   linkText: {
     color: '#6200ee',
@@ -38,4 +40,4 @@ const styles = StyleSheet.create({
 });
 
 
-
+export default SignUpScreen;

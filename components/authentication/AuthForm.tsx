@@ -28,7 +28,7 @@ function AuthForm({ isLogin, submitHandler, navigation }: AuthFormProps ) {
   const formValidation = isLogin ? loginValidationSchema : signUpValidation;
   const initialFormValues = isLogin
     ? { email: '', password: '' }
-    : { name: '', email: '', password: '', confirmPassword: '' };
+    : { fullName: '', email: '', password: '', confirmPassword: '' };
 
   return (
     <>
@@ -59,18 +59,18 @@ function AuthForm({ isLogin, submitHandler, navigation }: AuthFormProps ) {
               {/* <Text style={styles.title}>Create a new account</Text> */}
               {!isLogin && (
                 <>
-                  <Text style={styles.inputTitle}>Name</Text>
+                  <Text style={styles.inputTitle}>Full Name</Text>
                   <TextInput
                     style={styles.input}
                     placeholder='John Doe'
                     placeholderTextColor='#7b7a7a'
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
+                    onChangeText={handleChange('fullName')}
+                    onBlur={handleBlur('fullName')}
+                    value={values.fullName}
                     keyboardType='default'
                   />
-                  {touched.name && errors.name && (
-                    <Text style={styles.errorText}>{errors.name}</Text>
+                  {touched.fullName && errors.fullName && (
+                    <Text style={styles.errorText}>{errors.fullName}</Text>
                   )}
                 </>
               )}

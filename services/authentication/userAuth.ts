@@ -14,21 +14,28 @@ export const loginWithEmail = async (email: string, password: string) => {
     return;
   }
   return data.session?.access_token;
+  
+  
 };
 
-export const signUp = async (email: string, password: string) => {
-  const navigation = useNavigation<NavigationProp<any>>();
+export const signUp = async (email: string, password: string, fullName: string, navigation: NavigationProp<any>) => {
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
+    options: {
+            data: {
+              fullName, 
+              confirmPassword: password
+            }
+          }
   });
-
-  if (error) {
-    console.error('Sign-up error:', error.message);
-  } else {
-    console.log('Signed up successfully:', data);
-    navigation.navigate('Login');
-  }
+    if (error) {
+      alert(error.message);
+    } else {
+      alert('Check your email for confirmation.');
+      console.log('Signed up successfully:', data);
+      navigation.navigate('Login');
+    }
 };
 
 export const signOut = async () => {
@@ -38,6 +45,7 @@ export const signOut = async () => {
     console.error('Sign-out error:', error.message);
   } else {
     console.log('Signed out successfully');
+    
   }
 };
 
