@@ -14,14 +14,18 @@ import {
   loginValidationSchema,
   signUpValidation,
 } from '../../modals/form/form';
-import Button from '../ui/Button';
+import { GlobalStyles } from '../../styles/globalStyles';
+import PasswordInput from '../ui/PasswordInput';
+import { useLogin } from '../../features/authentication/hooks/useLogin';
 
+const { colors } = GlobalStyles;
 type AuthFormProps = {
   isLogin: boolean;
   submitHandler: (values: any) => void;
 };
 
 function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
+  const { isPending } = useLogin();
   const formValidation = isLogin ? loginValidationSchema : signUpValidation;
   const initialFormValues = isLogin
     ? { email: '', password: '' }
@@ -60,7 +64,7 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
                   <TextInput
                     style={styles.input}
                     placeholder='John Doe'
-                    placeholderTextColor='#7b7a7a'
+                    placeholderTextColor='#c0c0c0'
                     onChangeText={handleChange('name')}
                     onBlur={handleBlur('name')}
                     value={values.name}
@@ -76,7 +80,7 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
               <TextInput
                 style={styles.input}
                 placeholder='john.doe@email.com'
-                placeholderTextColor='#7b7a7a'
+                placeholderTextColor='#c0c0c0'
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
@@ -87,14 +91,11 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
                 <Text style={styles.errorText}>{errors.email}</Text>
               )}
               <Text style={styles.inputTitle}>Password</Text>
-              <TextInput
-                style={styles.input}
+              <PasswordInput
                 placeholder='Password'
-                placeholderTextColor='#7b7a7a'
+                value={values.password}
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
-                value={values.password}
-                secureTextEntry
               />
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>
@@ -102,14 +103,11 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
               {!isLogin && (
                 <>
                   <Text style={styles.inputTitle}>Confirm Password</Text>
-                  <TextInput
-                    style={styles.input}
+                  <PasswordInput
                     placeholder='Confirm password'
-                    placeholderTextColor='#7b7a7a'
                     onChangeText={handleChange('confirmPassword')}
                     onBlur={handleBlur('confirmPassword')}
-                    value={values.confirmPassword}
-                    secureTextEntry
+                    value={values.confirmPassword as string}
                   />
                   {touched.confirmPassword && errors.confirmPassword && (
                     <Text style={styles.errorText}>
@@ -121,8 +119,10 @@ function AuthForm({ isLogin, submitHandler }: AuthFormProps) {
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => handleSubmit()}
-                disabled={isSubmitting}
+                onPress={() => {
+                  handleSubmit();
+                }}
+                disabled={isSubmitting || isPending}
               >
                 <Text style={styles.buttonText}>
                   {isLogin ? 'Login' : 'Sign up'}
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#D9D9D9',
+    backgroundColor: colors.secondary,
   },
   keyboardAvoidingView: {
     width: '100%',
@@ -163,26 +163,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#404040',
+    color: colors.primary700,
   },
   inputTitle: {
-    color: '#404040',
+    color: colors.primary700,
     marginBottom: 5,
     fontSize: 14,
   },
   input: {
     width: '100%',
     height: 40,
-    borderColor: '#404040',
+    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
-    color: '#404040',
+    color: '#000',
   },
   button: {
     width: '100%',
-    backgroundColor: '#6200ee',
+    backgroundColor: colors.primary700,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

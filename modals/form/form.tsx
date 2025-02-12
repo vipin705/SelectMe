@@ -35,6 +35,4 @@ export type SignUpFormValues = {
   confirmPassword: string;
 };
 
-export type LoginFormValues = Partial<
-  Pick<SignUpFormValues, 'email' | 'password'>
->;
+export type LoginFormValues = Pick<SignUpFormValues, 'email' | 'password'>;

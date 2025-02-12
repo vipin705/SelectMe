@@ -1,36 +1,53 @@
 import { sub } from 'date-fns';
 import supabase from '../supabaseClient';
 
-export const loginWithEmail = async (email: string, password: string) => {
+export const loginWithEmail = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   let { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
   if (error) {
-    console.error('Error:', error.message);
-    return;
+    throw new Error(error.message);
   }
-  return data.session?.access_token;
+  return data;
 };
 
-export const signUp = async (email: string, password: string) => {
+export const signUp = async ({
+  email,
+  password,
+  fullName,
+}: {
+  email: string;
+  password: string;
+  fullName: string;
+}) => {
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
+    options: {
+      data: {
+        fullName,
+        confirmPassword: password,
+      },
+    },
   });
-
   if (error) {
-    console.error('Sign-up error:', error.message);
-  } else {
-    console.log('Signed up successfully:', data);
+    throw new Error(error.message);
   }
+  return data;
 };
 
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
 
   if (error) {
-    console.error('Sign-out error:', error.message);
+    throw new Error(error.message);
   } else {
     console.log('Signed out successfully');
   }
@@ -43,7 +60,7 @@ export const checkAuthState = async () => {
   } = await supabase.auth.getSession();
 
   if (error) {
-    console.error('Error fetching session:', error.message);
+    throw new Error(error.message);
   } else if (session) {
     return session;
   } else {
@@ -61,4 +78,15 @@ export const authChangeState = (
   });
 
   return subscription;
+};
+
+export const getUserProfile = async (id: string) => {
+  let { data: profiles, error } = await supabase
+    .from('profiles')
+    .select('name, role')
+    .eq('id', id);
+  if (error) {
+    throw new Error(error.message);
+  }
+  return profiles;
 };

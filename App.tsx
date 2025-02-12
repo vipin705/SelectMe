@@ -10,8 +10,19 @@ import {
   checkAuthState,
   authChangeState,
 } from './services/authentication/userAuth';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import SignUpSuccessScreen from './screens/SignUpSuccessScreen';
 
 const Stack = createStackNavigator();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 0,
+    },
+  },
+});
 
 function Root() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -44,6 +55,11 @@ function Root() {
               component={SignUpScreen}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name='SignUpSuccess'
+              component={SignUpSuccessScreen}
+              options={{ headerShown: false }}
+            />
           </>
         )}
         {isSignedIn && (
@@ -64,9 +80,11 @@ export default function App() {
   return (
     <>
       <StatusBar style='light' />
-      <AuthProvider>
-        <Root />
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <Root />
+        </AuthProvider>
+      </QueryClientProvider>
     </>
   );
 }

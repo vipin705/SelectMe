@@ -6,16 +6,18 @@ import { LoginFormValues } from '../modals/form/form';
 import { LinearGradient } from 'expo-linear-gradient';
 import { GlobalStyles } from '../styles/globalStyles';
 import { useAuth } from '../context/Auth/useAuth';
+import { useLogin } from '../features/authentication/hooks/useLogin';
+import Toast from 'react-native-toast-message';
 
 const { colors } = GlobalStyles;
 
 function LoginScreen({ navigation }: { navigation: NavigationProp<any> }) {
   const { navigate } = navigation;
-  const { login } = useAuth();
+  const { login } = useLogin();
 
   function handleLogin(values: LoginFormValues) {
     const { email, password } = values;
-    login(email as string, password as string);
+    login({ email, password });
   }
 
   return (
@@ -24,6 +26,7 @@ function LoginScreen({ navigation }: { navigation: NavigationProp<any> }) {
       <TouchableOpacity onPress={() => navigate('SignUp')}>
         <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
+      <Toast />
     </View>
   );
 }
@@ -33,10 +36,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#D9D9D9',
+    backgroundColor: colors.secondary,
   },
   linkText: {
-    color: '#6200ee',
+    color: colors.primary700,
     marginTop: 1,
     textAlign: 'center',
   },
