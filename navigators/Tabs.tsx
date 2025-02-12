@@ -8,15 +8,19 @@ import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import CreateTeam from '../screens/CreateTeam';
 import ScheduleScreen from '../screens/ScheduleScreen';
+import IconButton from '../components/ui/IconButton';
+import { signOut } from '../services/authentication/userAuth';
+import { GlobalStyles } from '../styles/globalStyles';
 
 const Tab = createBottomTabNavigator();
 
 const tabBarHeight = Platform.OS === 'ios' ? 90 : 80;
+const { colors } = GlobalStyles;
 
 const tabBarOptions: BottomTabNavigationOptions = {
-  tabBarStyle: { backgroundColor: '#6200ee', height: tabBarHeight },
-  tabBarActiveTintColor: '#ffffff',
-  tabBarInactiveTintColor: '#cccccc',
+  tabBarStyle: { backgroundColor: colors.primary700, height: tabBarHeight },
+  tabBarActiveTintColor: colors.accent500,
+  tabBarInactiveTintColor: colors.gray500,
   tabBarLabelStyle: {
     fontSize: 12,
     fontWeight: 'bold',
@@ -25,12 +29,20 @@ const tabBarOptions: BottomTabNavigationOptions = {
     padding: 8,
   },
   headerStyle: {
-    backgroundColor: '#6200ee',
+    backgroundColor: colors.primary700,
   },
-  headerTintColor: '#fff',
+  headerTintColor: colors.accent500,
   headerTitleStyle: {
     fontWeight: 'bold',
   },
+  headerRight: () => (
+    <IconButton
+      icon='exit'
+      size={24}
+      color={colors.accent500}
+      onPress={() => signOut()}
+    />
+  ),
 };
 
 function Tabs() {

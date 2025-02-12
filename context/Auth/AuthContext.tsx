@@ -3,26 +3,30 @@ import { loginWithEmail } from '../../services/authentication/userAuth';
 
 type AuthContextType = {
   token: string | null;
-  login: (email: string, password: string) => void;
   logout: () => void;
+  getUserID: (id: string) => void;
+  userId: string | null;
+  setUserToken: (token: string) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
   token: null,
-  login: () => {},
   logout: () => {},
+  getUserID: () => {},
+  userId: null,
+  setUserToken: () => {},
 });
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const login = async (email: string, password: string) => {
-    const data = await loginWithEmail(email, password);
-    if (data) {
-      setToken(data);
-    } else {
-      console.error('Failed to retrieve token');
-    }
+  const getUserID = (id: string) => {
+    setUserId(id);
+  };
+
+  const setUserToken = (token: string) => {
+    setToken(token);
   };
 
   const logout = () => {
@@ -30,7 +34,9 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider
+      value={{ token, logout, getUserID, userId, setUserToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,9 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { GlobalStyles } from '../../styles/globalStyles';
 
 type ButtonProps = React.PropsWithChildren<{
   onPress: () => void;
   variant?: 'primary' | 'secondary';
 }>;
+
+const { colors } = GlobalStyles;
 
 function Button({ children, onPress, variant = 'primary' }: ButtonProps) {
   return (
@@ -23,7 +26,7 @@ export default Button;
 const styles = StyleSheet.create({
   primary: {
     width: '100%',
-    backgroundColor: '#6200ee',
+    backgroundColor: colors.primary700,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
