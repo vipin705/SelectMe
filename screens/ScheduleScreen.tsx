@@ -4,7 +4,7 @@ import { GlobalStyles } from '../styles/globalStyles';
 const { colors } = GlobalStyles;
 
 function ScheduleScreen() {
-  return <View style={styles.container}></View>;
+  // return <View style={styles.container}></View>;
 }
 
 const styles = StyleSheet.create({
