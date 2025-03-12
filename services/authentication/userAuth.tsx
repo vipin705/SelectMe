@@ -1,4 +1,4 @@
-import { sub } from 'date-fns';
+// import { sub } from 'date-fns';
 import supabase from '../supabaseClient';
 
 export const loginWithEmail = async ({
@@ -90,3 +90,19 @@ export const getUserProfile = async (id: string) => {
   }
   return profiles;
 };
+
+
+export const createTeam = async (teamName: string, adminId: string): Promise<{ user: { id: string } }> =>{
+  const { data, error } = await supabase
+    .from('teams')
+    .insert([{ name: teamName, admin_id: adminId }])
+    .single<{ id: string }>();
+   
+
+  if (error) {
+    throw error;
+  }
+  
+  return { user: { id: data.id } };
+
+}

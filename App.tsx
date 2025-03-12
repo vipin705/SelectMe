@@ -42,7 +42,7 @@ function Root() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Navigator detachInactiveScreens={true} initialRouteName='Login'>
         {!isSignedIn && (
           <>
             <Stack.Screen
