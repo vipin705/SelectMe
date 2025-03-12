@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import  supabase  from "../../../services/supabaseClient";
 type Team = {
-  id:number;
+  member_id:number;
+  team_id:number;
+  team_name:string;
+  member_email:string;
   name:string;
   admin_id:number;
 }
 
 const fetchTeams = async (): Promise<Team[]> => {
-  const { data, error } = await supabase.from("teams").select("*");
+  const { data, error } = await supabase.from("teammembersview").select("*");
   console.log(data,"data")
 
   if (error) throw new Error(error.message);

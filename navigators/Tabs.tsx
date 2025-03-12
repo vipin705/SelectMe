@@ -47,7 +47,7 @@ const tabBarOptions: BottomTabNavigationOptions = {
 
 function Tabs() {
   return (
-    <Tab.Navigator screenOptions={tabBarOptions}>
+    <Tab.Navigator detachInactiveScreens={true} screenOptions={tabBarOptions}>
       <Tab.Screen
         name='Dashboard'
         component={HomeScreen}

@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { useAuth } from "../../../context/Auth/useAuth";
-import { createTeam } from "../../../services/authentication/userAuth";
+import { createTeam } from "../../../../services/authentication/userAuth";
+import { useAuth } from "../../../../context/Auth/useAuth";
+
 
 
 export function useCreateTeam() {
